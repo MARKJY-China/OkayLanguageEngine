@@ -1,0 +1,275 @@
+[gd_scene load_steps=10 format=3 uid="uid://2uhg3ppy6gik"]
+
+[ext_resource type="Script" uid="uid://b73qko0p2363i" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="Theme" uid="uid://btbgf4k7cm5oh" path="res://theme.tres" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cjphyoywwg746" path="res://scripts/code_edit.gd" id="3_7essg"]
+[ext_resource type="PackedScene" uid="uid://c21u0x4lpq8uo" path="res://scence/about.tscn" id="4_pqvm3"]
+[ext_resource type="PackedScene" uid="uid://det10hbpx7sv3" path="res://scence/interpreter.tscn" id="5_shc2a"]
+[ext_resource type="PackedScene" uid="uid://hpadyn7q4phr" path="res://scence/builder.tscn" id="6_sr2ul"]
+[ext_resource type="PackedScene" uid="uid://ovtrrfuldnvt" path="res://scence/create_new_file.tscn" id="7_qj2y4"]
+[ext_resource type="PackedScene" uid="uid://dxlqtto4n4ng4" path="res://scence/ui_settings.tscn" id="8_nmbla"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dm0k"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 0.392157)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0xm2m")
+
+[node name="CenterLabel" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -49.0
+offset_right = 112.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="CenterLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "OKAY编程学习笔记本"
+
+[node name="Subtitle" type="Label" parent="CenterLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "专业的OKAY中文编程语言IDE
+为无英文基础的人而设计的编程语言！"
+horizontal_alignment = 1
+
+[node name="IDE-Center" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7dm0k")
+
+[node name="Margin" type="MarginContainer" parent="IDE-Center"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Code" type="VBoxContainer" parent="IDE-Center/Margin"]
+layout_mode = 2
+
+[node name="TopBar_BG" type="PanelContainer" parent="IDE-Center/Margin/Code"]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="IDE-Center/Margin/Code/TopBar_BG"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="File" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "文件"
+switch_on_hover = true
+item_count = 6
+popup/item_0/text = "新建文件"
+popup/item_0/id = 4
+popup/item_1/text = "打开文件"
+popup/item_1/id = 0
+popup/item_2/text = "保存"
+popup/item_2/id = 1
+popup/item_3/text = "另存为"
+popup/item_3/id = 2
+popup/item_4/text = "导出为py"
+popup/item_4/id = 5
+popup/item_5/text = "删除"
+popup/item_5/id = 3
+
+[node name="Window" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "窗口"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "隐藏文件管理器"
+popup/item_0/id = 0
+popup/item_1/text = "隐藏控制台"
+popup/item_1/id = 1
+
+[node name="Build" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "构建"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "编译打包"
+popup/item_0/id = 0
+popup/item_1/text = "运行"
+popup/item_1/id = 1
+
+[node name="Settings" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "设置"
+switch_on_hover = true
+item_count = 3
+popup/item_0/text = "界面"
+popup/item_0/id = 0
+popup/item_1/text = "解释器"
+popup/item_1/id = 1
+popup/item_2/text = "清空数据"
+popup/item_2/id = 2
+
+[node name="Console" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "控制台"
+switch_on_hover = true
+item_count = 1
+popup/item_0/text = "清空控制台"
+popup/item_0/id = 0
+
+[node name="More" type="MenuButton" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "其他
+"
+switch_on_hover = true
+item_count = 3
+popup/item_0/text = "获取新版本"
+popup/item_0/id = 2
+popup/item_1/text = "关于软件"
+popup/item_1/id = 0
+popup/item_2/text = "退出引擎"
+popup/item_2/id = 1
+
+[node name="Status" type="Label" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "*新文件.txt"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Work" type="HBoxContainer" parent="IDE-Center/Margin/Code"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PC" type="PanelContainer" parent="IDE-Center/Margin/Code/Work"]
+layout_mode = 2
+
+[node name="FileManager" type="VBoxContainer" parent="IDE-Center/Margin/Code/Work/PC"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+
+[node name="Show" type="Button" parent="IDE-Center/Margin/Code/Work/PC/FileManager"]
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+theme_override_font_sizes/font_size = 14
+text = "文件管理器"
+
+[node name="File0" type="Button" parent="IDE-Center/Margin/Code/Work/PC/FileManager"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+theme_override_font_sizes/font_size = 14
+text = ">*未知.okpy"
+alignment = 0
+
+[node name="CodeEdit" type="CodeEdit" parent="IDE-Center/Margin/Code/Work"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "键入你的第一行代码吧"
+symbol_lookup_on_click = true
+symbol_tooltip_on_hover = true
+line_folding = true
+gutters_draw_breakpoints_gutter = true
+gutters_draw_bookmarks = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+code_completion_enabled = true
+auto_brace_completion_enabled = true
+script = ExtResource("3_7essg")
+
+[node name="Console_PC" type="PanelContainer" parent="IDE-Center/Margin/Code"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="IDE-Center/Margin/Code/Console_PC"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+
+[node name="Console" type="RichTextLabel" parent="IDE-Center/Margin/Code/Console_PC/MarginContainer"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 10
+scroll_following = true
+
+[node name="ConsoleInput" type="TextEdit" parent="IDE-Center/Margin/Code"]
+visible = false
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+placeholder_text = "输入内容"
+context_menu_enabled = false
+shortcut_keys_enabled = false
+scroll_fit_content_height = true
+
+[node name="About" parent="." instance=ExtResource("4_pqvm3")]
+visible = false
+layout_mode = 1
+
+[node name="Interpreter" parent="." instance=ExtResource("5_shc2a")]
+visible = false
+layout_mode = 1
+
+[node name="Builder" parent="." instance=ExtResource("6_sr2ul")]
+visible = false
+layout_mode = 1
+
+[node name="CreateNewFile" parent="." instance=ExtResource("7_qj2y4")]
+visible = false
+layout_mode = 1
+
+[node name="UISettings" parent="." instance=ExtResource("8_nmbla")]
+visible = false
+layout_mode = 1
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+ok_button_text = "Open"
+cancel_button_text = "取消"
+file_mode = 0
+access = 2
+show_hidden_files = true
+use_native_dialog = true
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="."]
+title = "确定退出吗？"
+initial_position = 2
+size = Vector2i(256, 106)
+ok_button_text = "退出"
+dialog_text = "你有文件没有保存，确定退出吗？
+退出将不会保存您的文件。"
+cancel_button_text = "取消"
+
+[node name="http" type="HTTPRequest" parent="."]
+download_chunk_size = 6553600
+
+[connection signal="pressed" from="IDE-Center/Margin/Code/Work/PC/FileManager/Show" to="." method="_on_show_pressed"]
+[connection signal="code_completion_requested" from="IDE-Center/Margin/Code/Work/CodeEdit" to="IDE-Center/Margin/Code/Work/CodeEdit" method="_on_code_completion_requested"]
+[connection signal="gui_input" from="IDE-Center/Margin/Code/Work/CodeEdit" to="." method="_on_code_edit_gui_input"]
+[connection signal="text_changed" from="IDE-Center/Margin/Code/Work/CodeEdit" to="." method="_on_code_edit_text_changed"]
+[connection signal="text_changed" from="IDE-Center/Margin/Code/Work/CodeEdit" to="IDE-Center/Margin/Code/Work/CodeEdit" method="_on_text_changed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="confirmed" from="ConfirmationDialog" to="." method="_on_confirmation_dialog_confirmed"]

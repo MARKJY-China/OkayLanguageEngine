@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="OkayLanguageEngine"
+config/description="欧克编程语言引擎"
+config/version="0.3.0"
+run/main_scene="uid://2uhg3ppy6gik"
+config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/image="uid://d1rywbdv1eu8i"
+config/icon="uid://d1rywbdv1eu8i"
+config/windows_native_icon="res://import/ftm45-wna51-001.ico"
+
+[autoload]
+
+Global="*res://scripts/Global.gd"
+
+[input]
+
+save_file={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

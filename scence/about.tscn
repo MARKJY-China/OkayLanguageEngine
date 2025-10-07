@@ -1,0 +1,70 @@
+[gd_scene load_steps=3 format=3 uid="uid://c21u0x4lpq8uo"]
+
+[ext_resource type="Script" uid="uid://u4irlwqixbif" path="res://scripts/about.gd" id="1_mddas"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mddas"]
+bg_color = Color(0.156863, 0.156863, 0.156863, 0.980392)
+
+[node name="About" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mddas")
+
+[node name="PC" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mddas")
+
+[node name="Control" type="Control" parent="PC"]
+layout_mode = 2
+
+[node name="Center" type="VBoxContainer" parent="PC/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.5
+offset_top = -75.5
+offset_right = 280.5
+offset_bottom = 75.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Tile" type="Label" parent="PC/Control/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "关于 OkayLanguageEngine（OLE）"
+
+[node name="Content" type="Label" parent="PC/Control/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "由MARKJY独立制作开发。版权归MARKJY（MARKJY.com）所有。
+引擎内置使用Python3.13解释器，使用自制中文编程语言开发创作（Okay语言）
+该作品的初衷是为了更好的给中文用户在Python学习理解和使用上更加快捷。
+OkayLanguage的语法上与Python完全一致，可以结合原版Python的代码运行。
+（使用文档：https://doc.markjy.com/modify_doc/13/）
+该项目纯公益免费，已在GitHub开源。
+你可以在IDE首页顶部栏点击【其他】-> 【支持&赞赏】进行助力支持，谢谢"
+
+[node name="Time" type="Label" parent="PC/Control/Center"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "-2025.10.07"
+horizontal_alignment = 2
+
+[node name="Button" type="Button" parent="PC/Control/Center"]
+layout_mode = 2
+text = "返回"
+
+[connection signal="pressed" from="PC/Control/Center/Button" to="." method="_on_button_pressed"]

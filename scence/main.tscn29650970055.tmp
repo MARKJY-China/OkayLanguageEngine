@@ -1,0 +1,141 @@
+[gd_scene load_steps=5 format=3 uid="uid://2uhg3ppy6gik"]
+
+[ext_resource type="Script" uid="uid://b73qko0p2363i" path="res://scripts/main.gd" id="1_0xm2m"]
+[ext_resource type="Theme" uid="uid://btbgf4k7cm5oh" path="res://theme.tres" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://cjphyoywwg746" path="res://scripts/code_edit.gd" id="3_7essg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7dm0k"]
+bg_color = Color(0.0823529, 0.0823529, 0.0823529, 0.392157)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0xm2m")
+
+[node name="CenterLabel" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -49.0
+offset_right = 112.0
+offset_bottom = 49.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="CenterLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "ST编程学习笔记本"
+
+[node name="Subtitle" type="Label" parent="CenterLabel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "专业的职中生编程工具IDE
+可编写ST语言的官方IDE
+为你的技能大赛赢得胜利！"
+horizontal_alignment = 1
+
+[node name="IDE-Center" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7dm0k")
+
+[node name="Margin" type="MarginContainer" parent="IDE-Center"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="Code" type="VBoxContainer" parent="IDE-Center/Margin"]
+layout_mode = 2
+
+[node name="TopBar_BG" type="PanelContainer" parent="IDE-Center/Margin/Code"]
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="IDE-Center/Margin/Code/TopBar_BG"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="Open" type="Button" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "打开"
+
+[node name="Save" type="Button" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "保存"
+
+[node name="Quit" type="Button" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "退出"
+
+[node name="Settings" type="Button" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "设置"
+
+[node name="About" type="Button" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("1_ig7tw")
+text = "关于"
+
+[node name="Status" type="Label" parent="IDE-Center/Margin/Code/TopBar_BG/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "*unknow.txt"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CodeEdit" type="CodeEdit" parent="IDE-Center/Margin/Code"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "键入你的第一行代码吧"
+symbol_lookup_on_click = true
+symbol_tooltip_on_hover = true
+line_folding = true
+gutters_draw_breakpoints_gutter = true
+gutters_draw_bookmarks = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+code_completion_enabled = true
+auto_brace_completion_enabled = true
+script = ExtResource("3_7essg")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "打开文件"
+ok_button_text = "Open"
+cancel_button_text = "取消"
+file_mode = 0
+access = 2
+show_hidden_files = true
+use_native_dialog = true
+
+[connection signal="pressed" from="IDE-Center/Margin/Code/TopBar_BG/TopBar/Open" to="." method="_on_open_pressed"]
+[connection signal="pressed" from="IDE-Center/Margin/Code/TopBar_BG/TopBar/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="IDE-Center/Margin/Code/TopBar_BG/TopBar/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="IDE-Center/Margin/Code/TopBar_BG/TopBar/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="IDE-Center/Margin/Code/TopBar_BG/TopBar/About" to="." method="_on_about_pressed"]
+[connection signal="code_completion_requested" from="IDE-Center/Margin/Code/CodeEdit" to="IDE-Center/Margin/Code/CodeEdit" method="_on_code_completion_requested"]
+[connection signal="gui_input" from="IDE-Center/Margin/Code/CodeEdit" to="." method="_on_code_edit_gui_input"]
+[connection signal="text_changed" from="IDE-Center/Margin/Code/CodeEdit" to="IDE-Center/Margin/Code/CodeEdit" method="_on_text_changed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

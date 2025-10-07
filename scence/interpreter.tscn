@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://det10hbpx7sv3"]
+
+[ext_resource type="Script" uid="uid://b5xwevkcs6ro4" path="res://scripts/interpreter.gd" id="1_kw7i4"]
+[ext_resource type="Theme" uid="uid://btbgf4k7cm5oh" path="res://theme.tres" id="2_xepi8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xepi8"]
+bg_color = Color(0.114897, 0.114897, 0.114897, 0.960784)
+
+[node name="Interpreter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kw7i4")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xepi8")
+
+[node name="Control" type="Control" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -130.0
+offset_top = -124.0
+offset_right = 130.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "解释器设置"
+
+[node name="System" type="Label" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "检测到您的系统架构：未知"
+
+[node name="System2" type="Label" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "ARM64不支持构建二进制文件"
+
+[node name="Content" type="Label" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "选择你的代码解释器架构：
+（当前：未选择）"
+
+[node name="64" type="Button" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_xepi8")
+text = "AMD-64bit（未下载）"
+alignment = 0
+
+[node name="32" type="Button" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_xepi8")
+text = "Win-32bit（未下载）"
+alignment = 0
+
+[node name="arm" type="Button" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_xepi8")
+text = "ARM-64（未下载）"
+alignment = 0
+
+[node name="Back" type="Button" parent="PanelContainer/Control/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_xepi8")
+theme_override_font_sizes/font_size = 18
+text = "返回"
+
+[connection signal="pressed" from="PanelContainer/Control/VBoxContainer/64" to="." method="_on_b64_pressed"]
+[connection signal="pressed" from="PanelContainer/Control/VBoxContainer/32" to="." method="_on_b32_pressed"]
+[connection signal="pressed" from="PanelContainer/Control/VBoxContainer/arm" to="." method="_on_barm_pressed"]
+[connection signal="pressed" from="PanelContainer/Control/VBoxContainer/Back" to="." method="_on_back_pressed"]
