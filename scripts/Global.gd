@@ -26,18 +26,20 @@ var python_win32 = "https://pan.aymao.com/f/gDkSE/python-win32.zip"
 var python_arm64 = "https://pan.aymao.com/f/E7KtL/python-3.13.7-embed-arm64.zip"
 
 # 定义关键字列表
-var a_keywords :=    ["如果", "否则", '否则如果',"条件循环","有序循环","退出","继续","省略","那么",]
-var a_keywords_en := ["if","else","elif","while","for","break","continue","pass",":"]
+var a_keywords :=    ["如果", "否则", '否则如果',"条件循环","有序循环","退出","继续","省略","那么","主函数"]
+var a_keywords_en := ["if","else","elif","while","for","break","continue","pass",":","if __name__ == \"__main__\""]
 var b_keywords :=    ["真", "假", "空"]
 var b_keywords_en := ["True","False","None"]
 var c_keywords :=    ["和", "或", "不是", "里", "是"]
 var c_keywords_en := ["and","or","not","in","is"]
-var d_keywords :=    ["函数","类","返回","导入","来自","产出"]
-var d_keywords_en := ["def","class","break","import","from","yield"]
+var d_keywords :=    ["函数","类","返回","导入","来自","产出",]
+var d_keywords_en := ["def","class","break","import","from","yield",]
 var e_keywords :=    ["字符型","整数型","布尔型","浮点型"]
 var e_keywords_en := ["str","int","bool","float"]
 var a_functions :=   ["打印","字符化","整数化","布尔化","浮点化","取长度","区间","输入"]
 var a_functions_en :=["print","str","int","bool","float","len","range","input"]
+var a_library  :=    ["随机","时间","数学","系统","路径","文件","日期","正则"]
+var a_library_en :=  ["random","time","math","sys","path","os","datetime","re"]
 
 
 # 拼音映射表：拼音 -> 中文关键字
@@ -75,21 +77,30 @@ var pinyin_map := {
 	"laizi":"来自",
 	"name":"那么",
 	"input":"输入",
+	"zhuhanshu":"主函数",
+	"suiji":"随机",
+	"shijian":"时间",
+	"shuxue":"数学",
+	"xitong":"系统",
+	"lujing":"路径",
+	"wenjian":"文件",
+	"riqi":"日期",
+	"zhengze":"正则",
 	
 	# 简拼
-	#"dy": "打印",
-	#"rg": "如果",
-	#"fz": "否则",
-	#"js": "结束",
-	#"hs": "函数",
-	#"brx": "布尔型",
-	#"fdx": "浮点型",
-	#"zfx": "字符型",
-	#"zsx": "整数型",
-	#"dr": "导入",
-	#"yxxh": "有序循环",
-	#"tjxh": "条件循环",
-	#"sl":"省略",
+	"dy": "打印",
+	"rg": "如果",
+	"fz": "否则",
+	"js": "结束",
+	"hs": "函数",
+	"brx": "布尔型",
+	"fdx": "浮点型",
+	"zfx": "字符型",
+	"zsx": "整数型",
+	"dr": "导入",
+	"yxxh": "有序循环",
+	"tjxh": "条件循环",
+	"sl":"省略",
 }
 
 # 函数拼音映射表
@@ -536,6 +547,8 @@ func compile_code(code: String) -> String:
 	var python_code = code
 	
 	# 替换关键字
+	for i in a_functions.size():
+		python_code = python_code.replace(a_functions[i], a_functions_en[i])
 	for i in a_keywords.size():
 		python_code = python_code.replace(a_keywords[i], a_keywords_en[i])
 	for i in b_keywords.size():
@@ -546,8 +559,6 @@ func compile_code(code: String) -> String:
 		python_code = python_code.replace(d_keywords[i], d_keywords_en[i])
 	for i in e_keywords.size():
 		python_code = python_code.replace(e_keywords[i], e_keywords_en[i])
-	for i in a_functions.size():
-		python_code = python_code.replace(a_functions[i], a_functions_en[i])
 	
 	# 添加必要的导入
 	if "random.randint" in python_code:
@@ -600,7 +611,7 @@ func run_compiled_code(python_code: String) -> void:
 		send_output.emit(get_hint_text('')+"运行成功:")
 		var i = 0
 		for line in output[0].split('\n'):
-			if i == output.size():
+			if (i+1) == output[0].split('\n').size():
 				return
 				
 			if i == 0:

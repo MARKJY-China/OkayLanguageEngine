@@ -12,7 +12,7 @@ config_version=5
 
 config/name="OkayLanguageEngine"
 config/description="欧克编程语言引擎"
-config/version="0.3.0"
+config/version="0.3.1"
 run/main_scene="uid://2uhg3ppy6gik"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/image="uid://d1rywbdv1eu8i"

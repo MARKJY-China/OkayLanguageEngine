@@ -10,70 +10,47 @@ func _request_code_completion(force: bool) -> void:
 	var line_text = get_line(caret_line)
 	
 	# 获取光标前的文本作为前缀
-	var prefix = ""
-	if caret_column > 0:
+	var prefix = "" #作为存储光标前的文本的变量
+	if caret_column > 0: #如果光标不位于行首
 		prefix = line_text.substr(0, caret_column)
+		
+	## === 1.抽取“最近单词”作为过滤键 ===
+	# 支持空格、tab、括号、运算符等任意分隔符
+	var match := RegEx.create_from_string("[\\w\\u4e00-\\u9fff]+$").search(prefix)
+	var key   = "" if match == null else match.get_string()
+	var line   = get_line(get_caret_line())
+	var col    = get_caret_column()
+	# 如果光标不位于行首并且光标前的字符是.
+	if col > 0 and line[col - 1] == '.':
+		key = '.' + key
 	
 	# 检查是否在字符串或注释中
 	if _is_in_string_or_comment(caret_line, caret_column):
 		return
-	
-	# 添加拼音补全选项
-	for pinyin in Global.pinyin_map:
-		# 检查前缀是否匹配拼音
-		if prefix.is_empty() or pinyin.begins_with(prefix):
-			var keyword = Global.pinyin_map[pinyin]
-			add_code_completion_option(CodeEdit.KIND_PLAIN_TEXT, keyword + " (" + pinyin + ")", keyword)
-	
-	# 添加中文关键字补全选项
-	for keyword in Global.a_keywords:
-		# 检查前缀是否匹配
-		if prefix.is_empty() or keyword.begins_with(prefix):
-			add_code_completion_option(CodeEdit.KIND_PLAIN_TEXT, keyword, keyword)
-	
-	# 添加常用函数补全
-	var functions = [
-		{"name": "主函数", "params": []},
-		{"name": "循环", "params": ["次数"]},
-		{"name": "输入", "params": ["提示"]},
-		{"name": "随机数", "params": ["最小值", "最大值"]}
-	]
-	
-	for func_data in functions:
-		var func_name = func_data["name"]
-		var func_pinyin = Global.function_pinyin.get(func_name, "")
 		
-		# 检查拼音匹配
-		if !func_pinyin.is_empty() and (prefix.is_empty() or func_pinyin.begins_with(prefix)):
-			var insert_text = func_name
-			if func_data["params"].size() > 0:
-				insert_text += "("
-				for i in range(func_data["params"].size()):
-					insert_text += "${%d:%s}" % [i+1, func_data["params"][i]]
-					if i < func_data["params"].size() - 1:
-						insert_text += ", "
-				insert_text += ")"
-			
-			add_code_completion_option(CodeEdit.KIND_FUNCTION, 
-				func_name + "() (" + func_pinyin + ")", insert_text)
-		
-		# 检查中文匹配
-		if prefix.is_empty() or func_name.begins_with(prefix):
-			var insert_text = func_name
-			if func_data["params"].size() > 0:
-				insert_text += "("
-				for i in range(func_data["params"].size()):
-					insert_text += "${%d:%s}" % [i+1, func_data["params"][i]]
-					if i < func_data["params"].size() - 1:
-						insert_text += ", "
-				insert_text += ")"
-			
-			add_code_completion_option(CodeEdit.KIND_FUNCTION, 
-				func_name + "()", insert_text)
+	## === 2.拼音首字母匹配（大小写不敏感） ===
+	var low_key = key.to_lower()
+
+	## 2.1 拼音 到 中文关键字
+	for py in Global.pinyin_map:
+		if py.begins_with(low_key) or Global.pinyin_map[py].begins_with(key):
+			add_code_completion_option(
+				CodeEdit.KIND_PLAIN_TEXT,
+				Global.pinyin_map[py] + " (" + py + ")",
+				Global.pinyin_map[py])
+
+	## 2.2 中文函数
+	for fn in Global.a_functions:
+		var fn_py = Global.pinyin_map.get(fn, "")
+		if fn_py.begins_with(low_key) or fn.begins_with(key):
+			add_code_completion_option(
+				CodeEdit.KIND_FUNCTION,
+				fn + "() (" + fn_py + ")",
+				fn + "()")
 	
 	# 添加控制结构补全
 	if prefix.begins_with("如果") or prefix.begins_with("ruguo") or prefix.begins_with("rg"):
-		add_code_completion_option(CodeEdit.KIND_PLAIN_TEXT, "如果 条件 那么", "如果 1:条件 那么\n\t${2:代码}\n结束")
+		add_code_completion_option(CodeEdit.KIND_PLAIN_TEXT, "如果 条件 那么", "如果  那么\n\t")
 	
 	# 更新补全选项
 	update_code_completion_options(force)
@@ -102,10 +79,7 @@ func _is_in_string_or_comment(line: int, column: int) -> bool:
 # 在ready函数中启用代码补全
 func _ready() -> void:
 	code_completion_enabled = true
-	code_completion_prefixes = PackedStringArray([
-		".",
-		" "
-	])
+	code_completion_prefixes = PackedStringArray([])
 
 
 

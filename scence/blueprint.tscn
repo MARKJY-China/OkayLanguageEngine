@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://r5lfs7s8pabj"]
+
+[node name="BluePrint" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scroll_offset = Vector2(-40, -40)
+
+[node name="GraphNode" type="GraphNode" parent="GraphEdit"]
+layout_mode = 0
+offset_left = 366.0
+offset_top = 234.0
+offset_right = 481.0
+offset_bottom = 307.0
+mouse_filter = 1
+position_offset = Vector2(326, 194)
+title = "节点Node"

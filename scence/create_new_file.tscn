@@ -67,7 +67,7 @@ text = "欧克脚本文件（.okpy）"
 
 [node name="3" type="CheckBox" parent="PanelContainer/Control/VBoxContainer"]
 layout_mode = 2
-text = "欧克可视化窗口文件（.okpyqt）"
+text = "欧克可视化窗口文件（.okqt）"
 
 [node name="Create" type="Button" parent="PanelContainer/Control/VBoxContainer"]
 layout_mode = 2
@@ -81,8 +81,19 @@ theme = ExtResource("1_57ifd")
 theme_override_font_sizes/font_size = 18
 text = "返回"
 
+[node name="FileDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+ok_button_text = "Open"
+cancel_button_text = "取消"
+file_mode = 0
+access = 2
+show_hidden_files = true
+use_native_dialog = true
+
 [connection signal="pressed" from="PanelContainer/Control/VBoxContainer/1" to="." method="_on_c1_pressed"]
 [connection signal="pressed" from="PanelContainer/Control/VBoxContainer/2" to="." method="_on_c2_pressed"]
 [connection signal="pressed" from="PanelContainer/Control/VBoxContainer/3" to="." method="_on_c3_pressed"]
 [connection signal="pressed" from="PanelContainer/Control/VBoxContainer/Create" to="." method="_on_create_pressed"]
 [connection signal="pressed" from="PanelContainer/Control/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
